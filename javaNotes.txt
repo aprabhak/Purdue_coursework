@@ -1,0 +1,54 @@
+1)static = members belong to the class instead of specific instance. There is only one instance existing. even if you make many it is all shared. class name is Foo. so Foo.doStuff(); no instance
+
+2)final primitive type = assign a value only one time (for eg, in constructor which is called only once. Or Initialization)
+  final reference type = assign a reference only one time. Can add content inside more than once
+  final method cannot be overriden.
+  final class cannot be inherited.
+
+3) Private - Only class in which it is declared can see it.
+   Protected - Only seen by subclasses/package members
+   Public - All can see.
+
+4)inheritance - classes derived from others classes, getting their methods,fields,nested classes. (EXCLUDES constructors and private members) ->constructors of super class can be invoked from sub class using super.
+super class is parent. subclass is child
+Java does not support multiple inheritance.
+
+5)Interface - group of related methods with empty bodies.(All methods empty)
+if classA implements classB, classA must implement(fill in) all the methods of classB. classB cannot implment(fill in) the methods
+
+6)Extend - inherit properties of a class
+if classA extends classB, classA can use methods/fields of classB
+Abstract class has abstract methods.(Does not have to be all abstract methods)
+abstract method is declared but contains no implementation
+Eg. classB would be abstract class Animal and classA would be class Dog.
+
+7)super - if properties of super class same name as sub class, use super to access super class properties
+super.variable,super.method().
+super() calls parent constructor with no arguments. Can add arguments.
+
+8)this - reference to current object. used in constructor to assign value to variable in current context, this.x = x;
+From within a constructor, you can use this to call another constructor in the same class.(Invocation of another constructor must be the first line in the constructor)
+printing this calls ToString() method.
+
+9) Overriding - define behavior specific to subclass type, reimplement parent class method with different functionality.
+If you need parent class method in subclass in the override method, use super.methodName().
+
+10) Nested classes - To logically grp classes used in one place,encapsulation,readable/maintainable code.
+a  outer class cannot be private but if nested, it is like it is private.
+To instatiate inner class,
+Outer_Demo outer = new Outer_Demo();
+Outer_Demo.Inner_Demo inner = outer.new Inner_Demo();
+
+11) anonymous class is a local class without a name.
+ declare and instantiate them at the same time
+ used whenever you need to override the method of a class or an interface.
+ AnonymousInner an_inner = new AnonymousInner() {
+   public void my_method() {
+      ........
+   }   
+};
+can be used in method argument.
+
+
+
+

@@ -1,0 +1,194 @@
+1) Layout - what app looks like (xml)
+   activities - what app should do (java)
+
+2) main folder - MainActivity.java(how interact with user), activity_main.xml(how app looks)
+   strings.xml(default text,app name,String resources)
+   AndroidManifest.xml(components,libraries) -> need to include all activity here.
+
+3) <TextView> in activity_main.xml(Displays text)
+   R.java (keep track of resources in app) -> lets you retrieve resources in your app.
+
+4)Button,spinners,text views are subclasses of Android view class. button is type of textview.
+
+5) LinearLayout - Components displayed next to each other in single row/column
+   Spinner - drop down list.
+
+6) match parent, wrap content
+
+7)Put text in string.xml, get them using android:text="@string/name"(dont hard code text)
+  android:entries="@array/name"
+
+8)onCreate() first called when activity created,setContentView(something.xml) tells android to use something layout.
+
+9)public void onClick(View view) -> required for onclick events.
+  findViewById(R.id.name) -> get reference to a view.
+  something.getSelectedItem() -> returns an object.
+  String.valueOf() -> convert Object to String.
+
+10)intent -> for one activity to start another.(put inside java method)
+   Intent intent = new Intent(this,acitity.class)
+   startActivity(intent)
+   putExtra("message",messageText) -> add extra info to intent. add text from messageText to "message"
+   getIntent() -> returns intent that started the activity. receive extra information.
+   intent.getStringExtra("name") ->get string from intent that has name
+   .getExtras().get("name")
+
+11)Actions ->tells android what activity can do. (Activity registered for sending messages)
+   intent filter -> specify what implicit intents to handle.
+      action -> android.intent.action.SEND
+      category -> android.intent.category.DEFAULT
+
+12) Intent.CreateChooser() -> lets you specify choosing a app, does not allow default.
+
+13)getString(R.string.stringname) ->get value of string resource.
+
+14) Threading -> Handler() - Schedules code
+    handler.post(new Runnable(){code};) -> posts code(put in override run()) that needs to run asap
+    handler.postDelayed(Runnable,long) -> post code run in future.(put in override run())
+
+15) onSaveInstanceState(Bundle name).put -> lets you save activity state before it is destroyed.
+    bundle -> lets u gather together different types of data into single object.
+    savedInstanceState.get -> get previous state data
+    savedInstanceState is null when activity run the first time.
+
+16)onPause(not in foreground),onResume(in foreground)
+
+17)Linear layout -> single row/column layout (no overlap)
+   weight -> Stretch view
+   padding
+   gravity,layout-gravity -> specify where view/view's contents appears in space.
+   Frame Layout -> Lets views overlap one another. first item at the bottom stack
+   Can have layouts within layout.
+   checkboxes,radiobuttons,toasts,scrollviews
+
+18)Constraint Layouts,Bluepints -> circles are constraints. Drag to vertical and horizontal walls. Need them to fix posn. Connect to other components.
+
+19)top-level activity -> most impt activity, first thing user sees.
+   category activity -> activity that shows data belonging to a category
+   detail/edit activity -> detail/edit particular record. 
+   ListView -> displays vertical list of data for navigation.(Use inside other layouts,like spinner)
+   ListView is subclass of AdapterView
+   OnItemClickListener -> Listen for item clicks
+   onItemClick() -> how activity respond to click. parameters tells you which item clicked.
+   thing.setOnItemClickListener(itemClickListener) -> attach listener to thing.
+   if data in java code/database, bind the data using activity code(adapter)
+   adapter is bridge between view and data source. e.g arrayadapters
+   ArrayAdapter<type> name 
+   ListViewName.setAdapter(name) -> attach arrayadaptor to listview
+
+20)app bar -> shortcuts (use toolbar for more features)
+To use themes like app bar/background, must have AppCompatActivity (subclass of Activity)
+icon image in /res/mipmap
+To apply theme, hardcode AndroidManifest or apply using style (change android:themes)
+name="colorPrimary" appbar color
+name="colorPrimaryDark" status bar color
+name = "colorAccent" UI controls color
+toolbar is subclass of View
+To use toolbar in more than 1 activity, put in layout file(.xml).
+put in activity layout using <include>
+To change text in app bar, use android:label in AndroidManifest inside activity tag
+actions are created in menu
+add action to app bar ->add icon to drawable,action title String, create menu resource file,
+add menu to app bar with onCreateOptionsMenu(Menu menu) -> put in activity where app bar is
+to make activity react when action in app bar is clicked use onOptionsItemSelected(MenuItem item) -> put in activity where app bar is.
+how activity reacts put in onOptionsItemSelected()
+To make one activity the parent of another, use android:parentActivityName in AndroidManifest
+To implement back button, just use getSupportActionBar(),setDisplayHomeAsUpEnabled in the activity
+action provider is action of app bar that defines its own appearance and behavior
+share action does not need icon, to share things like text use ShareActionProvider,
+setShareActionIntent(String text) -> put intent inside
+
+21) fragments -> code components that can be reused by different activities.
+fragment is not subclass of activity.
+Inflating the layout turns XML views into Java objects.(returns View)
+inflator.inflate() is like setContentView() used in activity
+To add fragment to activity so that it gets displayed in activity layout use <fragment>
+in activity layout
+Layout must have single view(e.g <fragment>) or viewgroup(e.g LinearLayout) as root element
+get reference to activity's fragments using activity's fragment manager, 
+getSupportFragmentManager().findFragmentById(R.id.fragment_id)
+onStart(),fragment has similar lifecycle to activity. activity become visible, fragment visible,
+set text in this method.
+List fragment is fragment that contains only a list. (has its own layout,event listener),
+just need implement onListItemClick()
+fragment is not subclass of context -> no access to global information, use other object to get context,
+like layout inflater
+code reuse, use interface(like listener) to get fragment to talk to any activity. activity and fragment implements the interface
+when fragment attached to activity, onAttach() is called.
+when item clicked in list fragment, onListItemClick is called,pass id from parameters to listener.itemclicked(id). All done in fragment.
+itemClicked() implemented in Activity.
+
+22)Android uses names of resource folder to decide which resources it shud use at runtime.
+Layout-large folder only used by devices with larger screen. (see different folder options)
+Each activity/fragment changes/etc visited is kept track in back stack -> can be reversed.
+you can programatically add fragment to activity layout while activity running.
+need placeholder for the fragment in the activity’s layout(e.g frame layout)
+you can create instance of fragment using new.
+add,replace,remove fragment from layout using fragment transaction
+add trasactions to backstack using addToBackStack() after specifying actions.
+eg, ft.replace() -> ft.setTransition() -> ft.addToBackStack() -> ft.commit()
+The above replaces fragments and saves the previous one to the stack(put in activity.java)
+save fragment state same way as saving activity state.
+
+23)To change what activity is first when app launched, changer intent filter in AndroidManifest.
+activity lifecycle methods are protected, fragment lifecycle methods are public
+set fragment layout using onCreateView(LayoutInflator inflator,ViewGroup container,Bundle savedInstanceState). -> fragments views are created here.
+Can just have normal layout in fragment xml.(no need to specify fragment tags)
+onClick call methods in ACTIVITY not the FRAGMENT.
+To make Button clicks call method in fragment,use onClickListener.fragment implement OnClickListener.
+if use <fragment> in layout,fragment recreated when activity recreated. 
+use fragment transaction for dynamic fragment.
+fragment transaction saves the fragment state to backstack and puts back in activity after rotation.
+fragment transaction in fragment has almost same code as in activity.
+getFragmentManager() gets fragmetn manager from fragment's parent activity. If there are multiple fragments,they are added as seperate transactions. Confusion when pressing back button.
+The getChildFragmentManager() method gets the fragment manager associated with the fragment’s parent fragment.fragment transaction added to back stack inside parent fragment transaction, not seperate transaction.
+
+24)To swipe thru fragments,use view pager.(add to layout)
+to add pages to view pager, use fragment pager adapter. (private class SectionPagerAdapter)
+Attach the fragment pager adapter to view pager in onCreate() using setAdapter() in activity.
+To use tabs,need support design library.
+For tabs,TabLayout add the tabs, AppbarLayout to group the tabs and toolbar together. (All inside AppbarLayout).
+to add text to tab,use getPageTitle(). To attach view pager to tab layout using setupWithViewPager()
+
+25)Use nestedscrollview to make layout content scrollable.(widget tag)
+For scroll multiple views,these must be added to a separate layout inside the scroll view
+CoordinatorLayout to coordinate animations between views (Coordinate scroll behavior)
+Enable toolbar to scroll, use app:layout... in xml
+coordinator layout only listens for nested scroll events
+collapsing toolbar,need to add CollapsingToolbarLayout to AppBarLayout included within CoordinatorLayout.
+add an image to a collapsing toolbar by adding an ImageView to the CollapsingToolBarLayout
+parralex effect to imageView.
+FAB(Floating Action Button), add to layout using widget tag. Add onClick functionality in activity
+Snackbar(can interact with it).use the view called coordinator to hold snackbar(put in coordinator layout).
+Snackbar can have onClick event which is undo.
+
+26)list view has no nested scrolling.
+recycler view more advanced version od list view
+recycler view access data using adapter.(most work is here)
+postion items using layout manager.
+card view is a type of frame layout that lets you display information on virtual cards
+add a <CardView> element to a layout. To use in recycler view, create new layout file in layout folder.
+create recycler view adapter(java class file)
+view holder is used to define what view or views the recycler view should use
+onCreateViewHolder() method gets called when the recycler view requires a new view holder(specify
+what layout to use for contents of viewHolder here)
+add data to the card views by implementing the adapter’s onBindViewHolder() method.
+create the recycler view, which will pass data to the adapter so that it can populate the cards. 
+Recycler view then displays the cards.
+add a recycler view to a layout using the <RecyclerView> element 
+tell the recycler view which layout manager it should use by creating a new instance of the type of layout manager,
+then attaching it to the recycler view
+Recycler view,listen for view events from the adapter. Use interface to allow adapter to be reusable.
+Put Listener and onClick in onBindViewHolder()
+Put Listener and Intent in fragment which sets the data.
+
+27)Navigation drawer can contain activity/fragments.
+Create navigation drawer header layout.
+Create Menu resource file (resource type menu,Directory name menu)
+create a navigation drawer by adding a <DrawerLayout> to your activity’s layout as its root element.
+(MainActivity layout code also inside together with NavigationView)
+NavigationView contains drawer header and Menu 
+create the drawer toggle in the activity’s onCreate() method by creating a new instance of 
+the ActionBarDrawerToggle class and adding it to the drawer layout.
+implement interface in activity to respond to clicks in navigation drawer.
+Put listener in onCreate() in activity
