@@ -47,7 +47,7 @@ Outer_Demo.Inner_Demo inner = outer.new Inner_Demo();
       ........
    }   
 };
-can be used in method argument.
+can be used in method argument for overriding other method
 
 
 
