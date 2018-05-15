@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int
+main(int argc, char **argv) {
+  printf("Welcome to the High Low game...\n");
+  // Write your implementation here...
+  int s = 'y';
+  while(s == 'y') {
+  int c,low,high,average;
+  low = 1;
+  high = 100;
+  average = (low + high)/2; 
+  printf("Think of a number between 1 and 100 and press <enter>\n");
+  while(high > low) {
+  c = 'x';
+  printf("Is it higher than %d? (y/n)\n",average);
+  c = getchar();
+  if(c == 'y') {
+   low = average + 1;
+   average = (low + high)/2;
+   } else {
+     high = average - 1;
+   average = (low + high)/2;
+     }
+  }
+  printf("The number is %d\n",average);
+  printf("Do you want to continue playing (y/n)?\n");
+  s = get
+char();
+}
+return 0;
+}
